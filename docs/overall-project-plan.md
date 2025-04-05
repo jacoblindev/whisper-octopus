@@ -208,53 +208,65 @@ Whisper Octopus is a multi-tenant, AI-enhanced customer support platform to be d
 - Presentation-quality UI with tenant branding
 
 ## Technical Architecture Diagram
-
 ```mermaid
-flowchart TD
-    subgraph Frontend[Presentation Layer]
-        direction TB
-        AgentPortal[Agent Portal\nThymeleaf] ~~~ CustomerPortal[Customer Portal\nThymeleaf]
-        TenantTheming[Tenant-specific Theming]
+flowchart LR
+    FE(Presentation Layer) --> API(API Layer) --> Services(Service Layer) --> Data(Data Layer)
+    Services --> AI(AI Layer) --> Data
+```
+
+### Presentation Layer
+```mermaid
+flowchart LR
+    subgraph FE[Presentation Layer]
+        AgentPortal[Agent Portal] ~~~ CustomerPortal[Customer Portal]
+        TenantTheming([Tenant-specific Theming])
         TenantTheming -.-> AgentPortal
         TenantTheming -.-> CustomerPortal
     end
+    
+    FE --> API(API Layer)
+```
 
+### API Layer
+```mermaid
+flowchart TD
+    FE(Presentation Layer) --> API
     subgraph API[API Layer]
-        direction LR
-        Auth[Authentication] --> TenantContext([Tenant Context]) --> Controllers[REST Controllers<br>Tenant Filter]
+        AUTH[Authentication] --> TenantContext([Tenant Context]) --> Controllers[REST Controllers] -.- TenantFilter([Tenant Filter])
     end
-
-    subgraph Services[Service Layer]
-        TenantAwareService[Tenant-Aware Service Base]
-        TicketService --> TenantAwareService
-        UserService --> TenantAwareService
-        KnowledgeService --> TenantAwareService
-        CompanyService --> TenantAwareService
-        AIService --> TenantAwareService
-        NotificationService --> TenantAwareService
-    end
-
-    subgraph Data[Data Layer]
-        PostgreSQL[(PostgreSQL)] ~~~ Redis[(Redis)]
-        subgraph PostgreSQL
-            CompanyData[Company Data] ~~~ RelationalData[Relational Data] ~~~ JSONB[JSONB Documents] ~~~ Vectors[pgvector]
-        end
-    end
-
-    subgraph AI[AI Layer]
-        direction LR
-        Embeddings[Embedding Service] ~~~ RAG[Simple RAG] ~~~ Classification[Ticket Classification]
-        TenantAwareAI[Tenant Isolation]
-    end
-
-    Frontend --> API
     API --> Services
-    Services --> Data
-    Services --> AI
-    AI --> Data
-    TenantTheming --> Frontend
-    TenantContext -.-> Services
-    TenantContext -.-> AI
+    API ~~~ AI
+    TenantContext -.-> Services(Service Layer)
+    TenantContext -.-> AI(AI Layer)
+```
+
+### Service Layer
+```mermaid
+flowchart TD
+    API(API Layer) --> Services
+    subgraph Services[Service Layer]
+        TenantAwareService([Tenant-Aware<br>Service Base])
+        TS[Ticket Service] -.-> TenantAwareService
+        US[User Service] -.-> TenantAwareService
+        KBS[Knowledge Service] -.-> TenantAwareService
+        CS[Company Service] -.-> TenantAwareService
+        AIS[AI Service] -.-> TenantAwareService
+        NS[Notification Service] -.-> TenantAwareService
+    end
+
+    Services --> Data(Data Layer)
+    Services --> AI(AI Layer)
+```
+
+### Data Layer
+```mermaid
+flowchart LR
+    Services(Service Layer) --> Data
+    AI(AI Layer) --> Data
+    subgraph Data[Data Layer]
+        direction LR
+        PostgreSQL[(PostgreSQL<hr>RDB/JSONB<br>Vector)] ~~~ Redis[(Redis)]
+    end
 ```
 
 ## Data Model Highlights
