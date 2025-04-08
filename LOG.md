@@ -1,0 +1,54 @@
+# 100 Days of Code with Claude AI
+
+## Day 3: 2025-04-07
+
+### Today's Progress:
+Chat with Claude AI to generate the Software Architecture Design (SA/SD) for the project. Discussed the following:
+- The overall architecture of the project.
+- The technology stack for each component.
+- The database design and schema.
+- The API design and endpoints.
+- The authentication and authorization mechanisms.
+- The deployment strategy and CI/CD pipeline.
+
+### Thoughts:
+- It's getting more and more realistic.
+- Will I be able to finish this project in 100 days? 🤔
+
+### Links: [Phase 1 SA/SD](./docs/phase-one-sd.md)
+
+<hr>
+
+## Day 2: 2025-04-06
+
+### Today's Progress:
+- Chat with Claude AI to set up phase one of the project.
+- Discussed the project structure.
+- Discussed the technology stack.
+- Discussed the multi-tenant architecture. And how to implement it.
+- Updated the project plan with the new information.
+- Decided to start with multi-modules monorepo for the project.
+
+### Thoughts:
+- The project structure is looking good.
+
+### Links: [Phase 1 PRD](./docs/phase-one-prd.md)
+
+<hr>
+
+## Day 1: 2025-04-05
+
+### Today's Progress:
+- Completed the first day of the 100 Days of Code challenge.
+- Set up GitHub repository for tracking progress.
+- Chat with Claude AI to brainstorm project ideas.
+- Discussed the project scope and objectives.
+- Discussed the project structure and technology stack.
+- Finalized the overall project plan and timeline.
+- Decided to build a support platform called **"Whisper Octopus"**.
+- Scoped out the MVP (Minimum Viable Product) for each phase of the project.
+
+### Thoughts:
+- Excited to start this journey and see how much I can do in 100 days with the help of Claude AI.
+
+### Links: [Project Plan](./docs/overall-project-plan.md)
