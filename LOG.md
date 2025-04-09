@@ -1,5 +1,22 @@
 # 100 Days of Code with Claude AI
 
+## Day 5: 2025-04-09
+
+### Today's Progress:
+- Set up Docker Compose for the project with PostgreSQL and Redis.
+- Set up the CI pipeline with GitHub Actions.
+- Adjusted the parent POM to work with GitHub Actions' CI pipeline.
+
+### Thoughts:
+- Learned a lot about Docker Compose and GitHub Actions today. 💪🏼
+
+### Links:
+- [Docker Compose](./compose.yaml)
+- [Github Actions](./.github/workflows/ci.yaml)
+- [Maven multi-module parent](./pom.xml)
+
+<hr>
+
 ## Day 4: 2025-04-08
 
 ### Today's Progress:
