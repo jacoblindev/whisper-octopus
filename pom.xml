@@ -84,6 +84,8 @@
                 <artifactId>whisper-octopus-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <!-- Third-party dependencies -->
         </dependencies>
     </dependencyManagement>
 
