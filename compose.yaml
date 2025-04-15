@@ -30,8 +30,23 @@ services:
     volumes:
       - ./docker/postgres:/var/lib/postgresql/data
       - ./docker/postgres/init:/docker-entrypoint-initdb.d
+    command: >
+      postgres 
+      -c shared_buffers=128MB                       # Reduced from 256MB for lower resource usage
+      -c work_mem=32MB                              # Reduced from 64MB for development
+      -c maintenance_work_mem=128MB                 # Sufficient for local dev
+      -c effective_cache_size=1GB                   # Reduced to be gentler on dev machines
+      -c max_connections=30                         # Fewer needed for local development
+      -c idle_in_transaction_session_timeout=60000  # Add timeout for idle connections (60s)
+      -c log_statement=mod                          # Log only modifications instead of all statements
+      -c log_min_duration_statement=250             # Only log queries taking >250ms
+      -c client_min_messages=notice                 # Include helpful notices
+      -c synchronous_commit=off                     # Faster transactions at slight durability cost (safe for dev)
+      -c fsync=off                                  # Faster at the cost of crash safety (only for dev)
+      -c debug_print_parse=on                       # Optional: helps debug complex queries
+      -c log_lock_waits=on                          # Help identify locking issues during development
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U whisper -d whisper_octopus"]
+      test: [ "CMD-SHELL", "pg_isready -U whisper -d whisper_octopus" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -53,8 +68,9 @@ services:
       --maxmemory 512mb 
       --maxmemory-policy allkeys-lru
       --requirepass ${REDIS_PASSWORD:-octopus_cache}
+      --loglevel verbose
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-octopus_cache}", "ping"]
+      test: [ "CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-octopus_cache}", "ping" ]
       interval: 10s
       timeout: 5s
       retries: 5

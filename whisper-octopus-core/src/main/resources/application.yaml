@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: whisper-octopus-core
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:whisper_octopus}
+    username: ${DB_USER:whisper}
+    password: ${DB_PASSWORD:octopus}
+    driver-class-name: org.postgresql.Driver
+    # Development settings - disable in production
+    hikari:
+      maximum-pool-size: 5              # Smaller pool size for local dev
+      minimum-idle: 2                   # Fewer idle connections
+      idle-timeout: 30000               # Shorter idle timeout (30s)
+      connection-timeout: 10000         # Faster failure detection (10s)
+      max-lifetime: 600000              # Shorter connection lifetime (10m)
+      validation-timeout: 3000          # Quicker validation (3s)
+      leak-detection-threshold: 2000    # Detect leaks after 2s
+
+  jpa:
+    hibernate:
+      ddl-auto: validate                # Important: Use validate with Flyway
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true                # Format SQL queries for readability
+        use_sql_comments: true          # Include comments in SQL queries
+        # Multi-tenant enhancements
+        filter:
+          tenant-filter:
+            condition: company_id = :#{@tenantContext.getTenantId()}
+      # Development-only setting
+      show-sql: true
+
+  flyway:
+    enabled: true
+    # Look for migrations in multiple places
+    locations:
+      - classpath:db/migration
+      - classpath:db/development        # Development-only migrations
+    baseline-on-migrate: true           # Handle existing databases
+    # For easier development
+    clean-disabled: false               # Enable clean for dev (DISABLE IN PRODUCTION)
+    # Versioning control
+    out-of-order: true                  # Allow out-of-order migrations during development
+    validate-on-migrate: true
+    placeholder-replacement: true
+    placeholders:
+      # Useful for tenant-specific development scenarios
+      default_tenant_id: 1
+      default_admin_password: $2a$10$ZLhnHxdpHR.znZl.7ZQyLe5JnQi7mXJLtGI8EKmWfjYJ1xPcPc7CO  # "password" bcrypted
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    ai.whisperoctopus.core.repository: DEBUG
