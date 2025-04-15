@@ -65,22 +65,22 @@
         <dependencies>
             <!-- Project modules -->
             <dependency>
-                <groupId>com.whisperoctopus</groupId>
+                <groupId>ai.whisperoctopus</groupId>
                 <artifactId>whisper-octopus-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.whisperoctopus</groupId>
+                <groupId>ai.whisperoctopus</groupId>
                 <artifactId>whisper-octopus-security</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.whisperoctopus</groupId>
+                <groupId>ai.whisperoctopus</groupId>
                 <artifactId>whisper-octopus-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.whisperoctopus</groupId>
+                <groupId>ai.whisperoctopus</groupId>
                 <artifactId>whisper-octopus-web</artifactId>
                 <version>${project.version}</version>
             </dependency>

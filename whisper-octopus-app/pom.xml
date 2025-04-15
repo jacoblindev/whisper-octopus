@@ -13,8 +13,20 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <groupId>ai.whisperoctopus</groupId>
+            <artifactId>whisper-octopus-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ai.whisperoctopus</groupId>
+            <artifactId>whisper-octopus-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ai.whisperoctopus</groupId>
+            <artifactId>whisper-octopus-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ai.whisperoctopus</groupId>
+            <artifactId>whisper-octopus-core</artifactId>
         </dependency>
 
         <dependency>
